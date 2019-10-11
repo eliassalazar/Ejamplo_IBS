@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/layouts/layout::plantilla">
+<head>
+<title th:fragment="titulo">VISTA LISTAR VENTAS</title>
+</head>
+<body>
+	<div class="container" th:fragment="content">
+		<h1 class="text-center" th:fragment="content">LISTADO DE VENTAS</h1>
+		<h2 th:="${items.size()==0}" style="margin-top: 35px; text-align: center;">NO HAY DATOS QUE MOSTRAR</h2>
+
+		<div style="text-align: right">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AgregarVenta">Nueva Venta</button>
+			<hr>
+			<div class="table-wrapper-scroll-y my-custom-scrollbar">
+				<table class="table border border-dark" id="datos" th:if="${items.size()>0}" style="color: black; text-align: center; width: 99%; float: none; margin-left: 1%">
+					<thead class="thead-dark">
+						<tr>
+							<th># Factura</th>
+							<th>Tipo de Venta</th>
+							<th>Total Venta</th>
+							<th>Nombre</th>
+							<th>Fecha</th>
+							<th>Estado</th>
+							<th>Id Usuario</th>
+							<th>Id Cliente</th>
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr>
+						
+							<td th:each="i.${items}"></td>
+							<td th:text="${i."></td>
+						
+						</tr>
+
+					</tbody>
+
+					<!--  <tbody>
+						<tr th:each="i:${intems}">
+							<td th:text="${i.numeroFactura}"></td>
+							<td th:text="${i.tipoVenta}"></td>
+							<td th:text="${i.totalVenta}"></td>
+							<td th:text="${i.nombre}"></td>
+							<td th:text="${i.fechaVenta}"></td>
+							<td th:text="${i.estado}"></td>
+							<td th:text="${i.idUsusario}"></td>
+							<td th:text="${i.idCliente}"></td>
+						</tr>
+					</tbody>-->
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

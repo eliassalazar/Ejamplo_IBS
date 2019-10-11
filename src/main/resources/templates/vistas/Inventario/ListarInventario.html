@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/layouts/layout::plantilla">
+
+<head>
+    <title th:fragment="titulo">VISTA LISTAR INVENTARIO</title>
+</head>
+
+<body>
+    <div class="container" th:fragment="content">
+        <h1 class="text-center mt-2 mb-2">INVENTARIO</h1>
+        <!--<h1 th:if="${items.size()==0}" style="margin-top: 35px; text-align: center;">No hay datos para mostrar</h1>-->
+
+
+        <div style="text-align: right">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarEntrada">Agregar
+                entrada</button>
+
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#agregarSalida">Agregar
+                salida</button>
+        </div>
+        <hr>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table border border-dark" id="datos" style="color: black; text-align: center; width: 99%; float: none; margin-left: 1%">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Descripcion</th>
+                    <th>Compra</th>
+                    <th>Venta</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <!--<th>Editar</th>
+                    <th>Eliminar</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="i:${items}">
+                    <td th:text="${i.fecha}"></td>
+                    <td th:text="${i.descripcion}"></td>
+                    <td th:text="${i.Compras.numeroFactura}"></td>
+                    <td th:text="${i.Ventas.numeroFactura}"></td>
+                    <td th:text="${i.producto}"></td>
+                    <td th:text="${i.cantidad}"></td>
+                    <!--<td>
+                        <a name="editar" id="editar" class="btn btn-primary" th:href="@{'/rol/modificar/' + ${i.idRol}}" role="button">Editar</a>
+                    <td> th:if="${items.size()>0}"
+                        <form th:action="@{vistaEliminar}" method="post">
+                            <input type="hidden" name="option" value="eliminar">
+                            <input type="hidden" name="idRol" th:value="${i.idRol}">
+                            <input type="hidden" name="nombreRol" th:value="${i.nombreRol}">
+                            <input type="submit" value="Eliminar" class="btn btn-danger">
+                        </form>
+                    </td>-->
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <!--MODAL AGREGAR SALIDA-->
+        <div class="modal fade" id="agregarSalida">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!--MODAL HEADER-->
+                    <div class="modal-header p-3 mb-2 bg-dark text-white">
+                        <h6 class="modal-title">NUEVA SALIDA</h6>
+                        <button type="button" class="close text-white" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    </div>
+
+                    <!--MODAL BODY-->
+                    <div class="modal-body">
+                        <form th:action="@{/inventario/agregar}" method="post" class="text-center">
+                            <div class="form-group text-left col-sm-12">
+                                <label>Descripcion:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario"
+                                    name="descripcion" autocomplete="off" value="Salida" required autofocus>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Producto:</label>
+                                <div>
+                                    <select name="idProducto" id="producto" class="form-control border border-dark">
+                                        <option th:each="i:${nombreProductos}" th:value="${i.idProducto}"
+                                            th:text="${i.nombreProducto}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Cantidad:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario"
+                                    name="cantidad" autocomplete="off" placeholder="Digite la cantidad" required>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Marca:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario" name="marca" autocomplete="off" disabled>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Categoria:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario" name="categoria" autocomplete="off" disabled>
+                            </div>
+                            <div class="form-group row">
+                                <input type="hidden" class="form-control" name="idCompra" id="idCompra">
+                            </div>
+                            <div class="form-group row">
+                                <input type="hidden" class="form-control" name="idVenta" id="idVenta">
+                            </div>
+
+                            <div class="text-center form-group mt-4">
+                                <hr class="border border-dark">
+                                <input type="submit" class="btn btn-success" value="Guardar">
+                                <input class="btn btn-primary" type="reset" value="Limpiar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--MODAL AGREGAR ENTRADA-->
+        <div class="modal fade" id="agregarEntrada">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!--MODAL HEADER-->
+                    <div class="modal-header p-3 mb-2 bg-dark text-white">
+                        <h6 class="modal-title">NUEVA ENTRADA</h6>
+                        <button type="button" class="close text-white" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    </div>
+
+                    <!--MODAL BODY-->
+                    <div class="modal-body table-wrapper-scroll-y my-custom-scrollbar">
+                        <form th:action="@{/inventario/agregar}" method="post" class="text-center">
+                            <div class="form-group text-left col-sm-12">
+                                <label>Descripcion:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario"
+                                    name="descripcion" autocomplete="off" value="Entrada" required autofocus>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Producto:</label>
+                                <div>
+                                    <select name="idProducto" id="producto" class="form-control border border-dark">
+                                        <option th:each="i:${nombreProductos}" th:value="${i.idProducto}"
+                                            th:text="${i.nombreProducto}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Cantidad:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario"
+                                    name="cantidad" autocomplete="off" placeholder="Digite la cantidad" required>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Marca:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario" name="marca" autocomplete="off" disabled>
+                            </div>
+                            <div class="form-group text-left col-sm-12">
+                                <label>Categoria:</label>
+                                <input type="text" class="form-control border border-dark" id="inventario" name="categoria" autocomplete="off" disabled>
+                            </div>
+                            <div class="form-group row">
+                                <input type="hidden" class="form-control" name="idCompra" id="idCompra">
+                            </div>
+                            <div class="form-group row">
+                                <input type="hidden" class="form-control" name="idVenta" id="idVenta">
+                            </div>
+
+                            <div class="text-center form-group mt-4">
+                                <hr class="border border-dark">
+                                <input type="submit" class="btn btn-success" value="Guardar">
+                                <input class="btn btn-primary" type="reset" value="Limpiar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('.openBtn').on('click', function () {
+            $('.modal-body').load('getContent.php?id=2', function () {
+                $('#myModal').modal({ show: true });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
